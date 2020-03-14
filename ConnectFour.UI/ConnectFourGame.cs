@@ -28,7 +28,14 @@ namespace ConnectFour.UI
                     Console.WriteLine(ex.Message);
                 }
             } while (!this.CheckGameEnded());
-            Console.WriteLine("Player " + this.GetPlayer() + " has won");
+            if (this.board.CheckIfPlayerHasWon())
+            {
+                Console.WriteLine("Player " + this.GetPlayer() + " has won");
+            } else
+            {
+                Console.WriteLine("Draw!");
+            }
+            
         }
         private bool CheckGameEnded()
         {
@@ -41,7 +48,7 @@ namespace ConnectFour.UI
 
         private int GetPlayer()
         {
-            return board.GetPlayer();
+            return board.GetOldPlayer();
         }
         private byte GetInputStone()
         {

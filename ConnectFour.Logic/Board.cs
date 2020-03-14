@@ -9,7 +9,7 @@ namespace ConnectFour.Logic
         /// </summary>
         private readonly byte[,] GameBoard = new byte[7,6];
 
-        internal int Player = 0;
+        internal int Player = 1;
 
         public void AddStone(byte column)
         {
@@ -24,20 +24,30 @@ namespace ConnectFour.Logic
 
                 if (cell == 0)
                 {
-                    GameBoard[column, row] = (byte)(Player + 1);
-                    Player = (Player + 1) % 2;
+                    GameBoard[column, row] = (byte) this.Player;
+                    if(Player == 1)
+                    {
+                        Player = 2;
+                    }else
+                    {
+                        Player = 1;
+                    }
                     return;
                 }
             }
 
             throw new InvalidOperationException("Column is full");
         }
-        public int GetPlayer()
+        public int GetOldPlayer()
         {
-            int temp =  this.Player;
-            temp = (Player + 1) % 2;
-            temp = temp + 1;
-            return temp;
+            if (Player == 1)
+            {
+                return 2;
+            }
+            else
+            {
+                return 1;
+            }
         }
         public bool CheckIfPlayerHasWon()
         {
@@ -46,7 +56,7 @@ namespace ConnectFour.Logic
             {
                 for (int i = 0; i < 7; i++)
                 {
-                    if (this.GameBoard[i,j] == this.GetPlayer() && this.GameBoard[i,j + 1] == this.GetPlayer() && this.GameBoard[i,j + 2] == this.GetPlayer() && this.GameBoard[i,j + 3] == this.GetPlayer())
+                    if (this.GameBoard[i,j] == this.GetOldPlayer() && this.GameBoard[i,j + 1] == this.GetOldPlayer() && this.GameBoard[i,j + 2] == this.GetOldPlayer() && this.GameBoard[i,j + 3] == this.GetOldPlayer())
                     {
                         return true;
                     }
@@ -57,7 +67,7 @@ namespace ConnectFour.Logic
             {
                 for (int j = 0; j < 6; j++)
                 {
-                    if (this.GameBoard[i,j] == this.GetPlayer() && this.GameBoard[i + 1,j] == this.GetPlayer() && this.GameBoard[i + 2,j] == this.GetPlayer() && this.GameBoard[i + 3,j] == this.GetPlayer())
+                    if (this.GameBoard[i,j] == this.GetOldPlayer() && this.GameBoard[i + 1,j] == this.GetOldPlayer() && this.GameBoard[i + 2,j] == this.GetOldPlayer() && this.GameBoard[i + 3,j] == this.GetOldPlayer())
                     {
                         return true;
                     }
@@ -68,7 +78,7 @@ namespace ConnectFour.Logic
             {
                 for (int j = 0; j < 6 - 3; j++)
                 {
-                    if (this.GameBoard[i,j] == this.GetPlayer() && this.GameBoard[i - 1,j + 1] == this.GetPlayer() && this.GameBoard[i - 2,j + 2] == this.GetPlayer() && this.GameBoard[i - 3,j + 3] == this.GetPlayer())
+                    if (this.GameBoard[i,j] == this.GetOldPlayer() && this.GameBoard[i - 1,j + 1] == this.GetOldPlayer() && this.GameBoard[i - 2,j + 2] == this.GetOldPlayer() && this.GameBoard[i - 3,j + 3] == this.GetOldPlayer())
                         return true;
                 }
             }
@@ -77,7 +87,7 @@ namespace ConnectFour.Logic
             {
                 for (int j = 3; j < 6; j++)
                 {
-                    if (this.GameBoard[i,j] == this.GetPlayer() && this.GameBoard[i - 1,j - 1] == this.GetPlayer() && this.GameBoard[i - 2,j - 2] == this.GetPlayer() && this.GameBoard[i - 3,j - 3] == this.GetPlayer())
+                    if (this.GameBoard[i,j] == this.GetOldPlayer() && this.GameBoard[i - 1,j - 1] == this.GetOldPlayer() && this.GameBoard[i - 2,j - 2] == this.GetOldPlayer() && this.GameBoard[i - 3,j - 3] == this.GetOldPlayer())
                         return true;
                 }
             }
@@ -95,7 +105,7 @@ namespace ConnectFour.Logic
                 for (int j = 0; j < 6; j++)
                 {
                     if (this.GameBoard[i, j] == 0)
-                        return true;
+                        return false;
                 }
             }
             return true;

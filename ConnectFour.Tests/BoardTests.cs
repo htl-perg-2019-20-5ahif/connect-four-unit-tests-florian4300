@@ -49,11 +49,11 @@ namespace ConnectFour.Tests
 
             b.AddStone(0);
 
-            Assert.Equal(b.GetBoard()[0, 0], oldPlayer + 1);
+            Assert.Equal(b.GetBoard()[0, 0], oldPlayer);
             oldPlayer = b.Player;
             b.AddStone(1);
 
-            Assert.Equal(b.GetBoard()[1, 0], oldPlayer + 1);
+            Assert.Equal(b.GetBoard()[1, 0], oldPlayer);
         }
         [Fact]
         public void VerticalWin()
@@ -124,10 +124,20 @@ namespace ConnectFour.Tests
 
             for (byte i = 0; i < 7; i++)
             {
-                b.AddStone(i);
-                b.AddStone(i);
+                for (byte j = 0; j < 3; j++)
+                {
+                    b.AddStone(i);
+                    b.AddStone(i);
+                }
             }
             Assert.True(b.CheckIfBoardIsFull());
+        }
+
+        [Fact]
+        public void BoardNotFull()
+        {
+            var b = new Board();
+            Assert.False(b.CheckIfBoardIsFull());
         }
     }
 }
